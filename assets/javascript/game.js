@@ -7,6 +7,13 @@ $(document).ready(function () {
 
     var resetStart = function () {
         $(".crystals").empty();
+
+        var images = [
+            'assets/images/pokeball.png', 
+            'assets/images/greatball.png', 
+            'assets/images/ultraball.png', 
+            'assets/images/loveball.png'];
+
         random_result = Math.floor(Math.random() * 69) + 30;
 
         // console.log(random_result);
@@ -22,30 +29,37 @@ $(document).ready(function () {
                 "class": 'crystal',
                 "data-random": random
             });
+            crystal.css({
+                "background-image":"url('" + images[i] + "')",
 
+            });
             $(".crystals").append(crystal);
         }
     }
 
     resetStart();
 
-    $(".crystal").on('click', function () {
+    $(document).on('click', ".crystal", function () {
 
         var num = parseInt($(this).attr('data-random'));
 
         previous += num;
 
         if (previous > random_result) {
-            console.log("You lost!");
+            // console.log("You lost!");
             losses++;
             $("#losses").text('Losses: ' + losses);
+            previous = 0;
+            resetStart();
         }
         else if (previous === random_result) {
-            console.log("You win!");
+            // console.log("You win!");
             wins++;
             $("#wins").text('Wins: ' + wins);
+            previous = 0;
+            resetStart();
         }
-        console.log(previous);
+        $(".yourScore").text('Your Score: ' + previous);
     });
 
 });
